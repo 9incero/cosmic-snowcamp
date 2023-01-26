@@ -1,0 +1,138 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+	font-family: 'Pretendard-Regular';
+}
+body{
+  -ms-overflow-style: none;
+}
+  
+::-webkit-scrollbar {
+   display: none;
+}
+ 
+.container1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lineup{
+  width: 700px;
+  height: auto;
+}
+
+.wrap_inner{
+  margin: 10px 26px 0;
+  padding: 0px 0px 0px;
+}
+
+.image{
+  align-items: flex-end;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+button{
+  background-color: rgba(0, 0, 0, 0);
+  border:none;
+}
+
+/* .col{
+  border-left: 1000px;
+} */
+
+.bar3{
+  border-right: 10px;
+}
+
+.magnifier{
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.imageframe{
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.forpadding{
+  padding: 10px;
+}
+
+.lineup{
+  margin-left: 5%;
+}
+
+.people a {
+  text-decoration: none;
+}
+
+.category a {
+  text-decoration: none;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.worklist{
+  margin:6px;
+  width:300px;
+  height:300px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1em;
+}
+
+.card-img-top{
+  height: 15rem;
+  object-fit: cover;
+}
+
+.people{
+  text-align: center; 
+}
+
+.inlineul{
+  list-style: none;
+  padding-left:0px;
+
+}
+
+.inlineli{
+  float: left;
+  padding: 5px;
+}
+
+.category{
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+}
+
+.categorydiv{
+  text-align: center;
+}
+
+
+
+.carddiv{
+  display: flex;
+  justify-content: center;
+}
