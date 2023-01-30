@@ -1,43 +1,18 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
+import SearchName from "./component/SearchName";
+import SearchTable from "./component/SearchTable";
+import Detail from "./component/Detail";
+import { useEffect, useState, PureComponent } from "react";
+import { Routes, Route, NavLink, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const datalist = [];
+let foodnum = -1;
 
-function SearchName(props) {
-  return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        const foodname = event.target.foodname.value;
-        props.onCreate(foodname);
-      }}
-    >
-      <input type="text" name="foodname" placeholder="검색어를 입력하세요" />
-      <input type="submit" value="검색"></input>
-    </form>
-  );
-}
-
-function SearchTable(props) {
-  return (
-    <Table bordered hover>
-      <thead>
-        <tr>
-          <th>상품명</th>
-          <th>종류</th>
-          <th>생산업체</th>
-        </tr>
-      </thead>
-      <tbody>{props.resultlist}</tbody>
-    </Table>
-  );
-}
 function App() {
-  let table = null;
   const [foodname, SetFoodname] = useState("");
   const [mode, setMode] = useState("");
+  const [table, setTable] = useState("");
 
   useEffect(() => {
     console.log(foodname);
@@ -50,42 +25,49 @@ function App() {
         //then을 await으로 바꿔야함
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           let tmp = [];
           for (let i = 0; i < 5; i++) {
             tmp.push({
+              id: i,
               name: data.I2790.row[i].DESC_KOR,
               group: data.I2790.row[i].GROUP_NAME,
               maker: data.I2790.row[i].MAKER_NAME,
+              content: data.I2790.row[i],
             });
           }
           datalist.push({ key: foodname, context: tmp });
           console.log(datalist);
           setMode("VIEW_TABLE");
+          let results = null;
+          for (let i = 0; i < datalist.length; i++) {
+            if (datalist[i].key === foodname) {
+              console.log(datalist[i].key);
+              console.log("hh", foodname);
+              foodnum = i;
+              results = datalist[i].context.map((result) => (
+                <tr>
+                  <td>
+                    <NavLink to={"/" + result.id}>{result.name}</NavLink>
+                  </td>
+                  <td>{result.group}</td>
+                  <td>{result.maker}</td>
+                </tr>
+              ));
+
+              break;
+            }
+          }
+          console.log(results);
+          setTable(
+            <SearchTable key={foodname} resultlist={results}></SearchTable>
+          );
+
+          console.log(table);
         });
     }
   }, [foodname]);
 
-  if (mode === "VIEW_TABLE") {
-    let results = null;
-    for (let i = 0; i < datalist.length; i++) {
-      if (datalist[i].key === foodname) {
-        console.log(datalist[i].key);
-        console.log("hh", foodname);
-
-        results = datalist[i].context.map((result) => (
-          <tr>
-            <td>{result.name}</td>
-            <td>{result.group}</td>
-            <td>{result.maker}</td>
-          </tr>
-        ));
-        break;
-      }
-    }
-    console.log(results);
-    table = <SearchTable key={foodname} resultlist={results}></SearchTable>;
-    console.log(table);
-  }
   return (
     <div className="App">
       <h1>음식 영양성분 검색기</h1>
@@ -95,7 +77,14 @@ function App() {
           SetFoodname(_foodname);
         }}
       ></SearchName>
-      {table}
+
+      <Routes>
+        <Route path="/" element={table}></Route>
+        <Route
+          path="/:id"
+          element={<Detail datalist={datalist} foodnum={foodnum} />}
+        ></Route>
+      </Routes>
     </div>
   );
 }
