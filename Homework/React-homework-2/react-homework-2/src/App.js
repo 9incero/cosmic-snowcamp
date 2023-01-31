@@ -81,7 +81,7 @@ function App() {
   }, [foodname]);
 
   if (mode === "LODING") {
-    return <p>로딩중</p>;
+    return <p>검색 중입니다.</p>;
   }
   return (
     <div className="App">
